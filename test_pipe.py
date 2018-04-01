@@ -31,5 +31,18 @@ def test_clean_string():
     assert pipe.clean_string(test_string) == "ca"
 
 
+def test_sort_domains():
+    unsorted_input = {'ba': 38, 'com': 57, 'az': 7, 'net': 1, 'de': 3, 'org': 5}
+    sorted_output = [('com', 57), ('ba', 38), ('az', 7), ('org', 5), ('de', 3), ('net', 1)]
+
+    fn_output = pipe.sort_domains(unsorted_input)
+
+    item_list = []
+    for item in fn_output:
+        item_list.append(item)
+
+    assert item_list == sorted_output
+
+
 def test_display_statistics():
     pass
