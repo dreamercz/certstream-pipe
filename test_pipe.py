@@ -26,5 +26,11 @@ def test_create_statistics():
     assert pipe.create_statistics(None, return_only=True) == statistics_dic
 
 
+def test_clean_string():
+    test_string = "ca\x1b[0m \n"
+
+    assert pipe.clean_string(test_string) == "ca"
+
+
 def test_display_statistics():
     pass

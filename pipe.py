@@ -6,6 +6,7 @@ Based on the workshop assigment from: https://github.com/intraworlds/workshop-ph
 """
 
 import sys
+import re
 
 domain_stats = {}
 
@@ -31,6 +32,15 @@ def create_statistics(top_domain, return_only=False):
     domain_stats[top_domain] = 1
 
     return domain_stats
+
+
+def clean_string(dirty_string):
+    # Removes ansi escape sequences
+    new_string = re.sub(u"\u001b\[.*?[@-~]", "", dirty_string)
+    # Removes newline and empty space
+    new_string = new_string.replace("\n", "").replace(" ", "")
+
+    return new_string
 
 
 def display_statistics(stats_dictionary):
