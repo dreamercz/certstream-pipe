@@ -79,6 +79,14 @@ def create_statistics(top_domain, return_only=False):
 
 
 def sort_domains(unsorted_domains):
+    """Takes unsorted dictionary of domains and occurences and sorts them according to their number of occurences.
+
+    Arguments:
+        unsorted_domains {dictionary[str, int]} -- Unsorted dictionary of domain names and number of occurences.
+
+    Returns:
+        sorted_domains {list[tuple(str, int)]} -- List of domain and occurences pairs sorted in descending order.
+    """
     # Sorts domains by occurence, returns list of values
     sorted_counts = sorted(unsorted_domains.values(), reverse=True)
     # Sorts domains by occurence, but returns keys instead of values
