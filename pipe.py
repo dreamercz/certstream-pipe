@@ -5,30 +5,43 @@ This script takes piped input, filters and processes it, and displays statistics
 Based on the workshop assigment from: https://github.com/intraworlds/workshop-php
 """
 
+import sys
 
-def take_piped_input(parameter_list):
+domain_stats = {}
+
+
+def filter_top_domain_name(line):
+    # Filter full domain name from the entire line
+    full_domain_name = line.split(" - ")[1]
+    # Filter out only the top level domain
+    top_domain = full_domain_name.split(".")[-1]
+
+    return top_domain
+
+
+def create_statistics(top_domain, return_only=False):
+    # If True, returns the current statistic dictionary (for tests)
+    if return_only is True:
+        return domain_stats
+    # If key already exists, increase it's count
+    if top_domain in domain_stats:
+        domain_stats[top_domain] += 1
+        return domain_stats
+    # If key didn't exist before, save it as new occurence
+    domain_stats[top_domain] = 1
+
+    return domain_stats
+
+
+def display_statistics():
     pass
 
 
-def retrieve_line(parameter_list):
-    pass
-
-
-def filter_domain_name(parameter_list):
-    pass
-
-
-def create_statistics(parameter_list):
-    pass
-
-
-def display_statistics(parameter_list):
-    pass
-
-
-def main():
-    pass
+def main(line):
+    line = filter_top_domain_name(line)
+    create_statistics(line)
 
 
 if __name__ == '__main__':
-    main()
+    for line in sys.stdin:
+        main(line)
