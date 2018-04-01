@@ -89,8 +89,11 @@ def sort_domains(unsorted_domains):
     return sorted_domains
 
 
-def display_statistics(stats_dictionary):
-    pass
+def display_top_ten(sorted):
+    for _, pair in zip(range(10), sorted):
+        print(pair)
+    print("\n")
+    # TODO Pretty-print the top 10 in place so the terminal doesn't scroll
     # sys.stdout.write(stats_dictionary)
     # sys.stdout.flush()
 
@@ -100,7 +103,7 @@ def main(line):
     line = clean_string(line)
     stats = create_statistics(line)
     domains = sort_domains(stats)
-    display_statistics(domains)
+    display_top_ten(domains)
 
 
 if __name__ == '__main__':
