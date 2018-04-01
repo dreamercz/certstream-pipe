@@ -78,10 +78,19 @@ def create_statistics(top_domain, return_only=False):
     return domain_stats
 
 
-def display_statistics(stats_dictionary):
-    sorted_domains = sorted(stats_dictionary, key=stats_dictionary.__getitem__)
+def sort_domains(unsorted_domains):
+    # Sorts domains by occurence, returns list of values
+    sorted_counts = sorted(unsorted_domains.values(), reverse=True)
+    # Sorts domains by occurence, but returns keys instead of values
+    sorted_keys = sorted(unsorted_domains, key=unsorted_domains.__getitem__, reverse=True)
+    # Packs everything together again
+    sorted_domains = zip(sorted_keys, sorted_counts)
 
-    print(sorted_domains)
+    return sorted_domains
+
+
+def display_statistics(stats_dictionary):
+    pass
     # sys.stdout.write(stats_dictionary)
     # sys.stdout.flush()
 
@@ -90,7 +99,8 @@ def main(line):
     line = filter_top_domain_name(line)
     line = clean_string(line)
     stats = create_statistics(line)
-    display_statistics(stats)
+    domains = sort_domains(stats)
+    display_statistics(domains)
 
 
 if __name__ == '__main__':
