@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This script takes piped input, filters and processes it, and displays statistics about the piped data.
-Based on the workshop assigment from: https://github.com/intraworlds/workshop-php
+This script takes piped input from the cerstream string, filters and processes it,
+and displays real-time statistics about the top 10 used top level domains.
+
+Adapted from the PHP workshop assigment from: https://github.com/intraworlds/workshop-php
+
+Usage: $ certstream | python3 pipe.py
 """
 
 import sys
@@ -12,6 +16,16 @@ domain_stats = {}
 
 
 def filter_top_domain_name(line):
+    """Takes the line from stdin and filters out only the last part,
+    which is the full domain name. Then it strips that so only the top level
+    domain name is returned.
+
+    Arguments:
+        line {string} -- The whole line as piped in from the certstream script.
+
+    Returns:
+        top_domain {string} -- Top level domain name, eg. "com", "net" etc.
+    """
     # Filter full domain name from the entire line
     full_domain_name = line.split(" - ")[1]
     # Filter out only the top level domain
@@ -21,6 +35,15 @@ def filter_top_domain_name(line):
 
 
 def clean_string(dirty_string):
+    """Cleans the retrieved top level domain string from any ANSI escape
+    sequences as well as empty spaces and newlines.
+
+    Arguments:
+        dirty_string {string} -- Top level domain string with the unwanted characters.
+
+    Returns:
+        new_string {string} -- Clenaed up string containing only top level domain name.
+    """
     # Removes ansi escape sequences
     new_string = re.sub(u"\u001b\[.*?[@-~]", "", dirty_string)
     # Removes newline and empty space
@@ -30,6 +53,18 @@ def clean_string(dirty_string):
 
 
 def create_statistics(top_domain, return_only=False):
+    """Inserts the domain name into the global domain_stats dictionary.
+    In case the domain name already exists in the dictionary, it increases it's value by 1.
+
+    Arguments:
+        top_domain {string} -- The top level domain name.
+
+    Keyword Arguments:
+        return_only {bool} -- If True, fn returns global dict without inserting new domain. (default: {False})
+
+    Returns:
+        domain_stats {dictionary[str, int]} -- Dictionary of domain names and the number of occurences.
+    """
     # If True, returns the current statistic dictionary (for tests)
     if return_only is True:
         return domain_stats
@@ -44,7 +79,11 @@ def create_statistics(top_domain, return_only=False):
 
 
 def display_statistics(stats_dictionary):
-    print(stats_dictionary)
+    sorted_domains = sorted(stats_dictionary, key=stats_dictionary.__getitem__)
+
+    print(sorted_domains)
+    # sys.stdout.write(stats_dictionary)
+    # sys.stdout.flush()
 
 
 def main(line):
