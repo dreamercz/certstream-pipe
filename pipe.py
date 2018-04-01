@@ -20,6 +20,15 @@ def filter_top_domain_name(line):
     return top_domain
 
 
+def clean_string(dirty_string):
+    # Removes ansi escape sequences
+    new_string = re.sub(u"\u001b\[.*?[@-~]", "", dirty_string)
+    # Removes newline and empty space
+    new_string = new_string.replace("\n", "").replace(" ", "")
+
+    return new_string
+
+
 def create_statistics(top_domain, return_only=False):
     # If True, returns the current statistic dictionary (for tests)
     if return_only is True:
@@ -34,21 +43,13 @@ def create_statistics(top_domain, return_only=False):
     return domain_stats
 
 
-def clean_string(dirty_string):
-    # Removes ansi escape sequences
-    new_string = re.sub(u"\u001b\[.*?[@-~]", "", dirty_string)
-    # Removes newline and empty space
-    new_string = new_string.replace("\n", "").replace(" ", "")
-
-    return new_string
-
-
 def display_statistics(stats_dictionary):
     print(stats_dictionary)
 
 
 def main(line):
     line = filter_top_domain_name(line)
+    line = clean_string(line)
     stats = create_statistics(line)
     display_statistics(stats)
 
