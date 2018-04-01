@@ -33,13 +33,14 @@ def create_statistics(top_domain, return_only=False):
     return domain_stats
 
 
-def display_statistics():
-    pass
+def display_statistics(stats_dictionary):
+    print(stats_dictionary)
 
 
 def main(line):
     line = filter_top_domain_name(line)
-    create_statistics(line)
+    stats = create_statistics(line)
+    display_statistics(stats)
 
 
 if __name__ == '__main__':
