@@ -44,5 +44,5 @@ def test_sort_domains():
     assert item_list == sorted_output
 
 
-def test_display_statistics():
+def test_display_top_ten():
     pass
