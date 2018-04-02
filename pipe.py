@@ -97,13 +97,15 @@ def sort_domains(unsorted_domains):
     return sorted_domains
 
 
-def display_top_ten(sorted):
-    for _, pair in zip(range(10), sorted):
-        print(pair)
+def display_top_ten(sorted_domains):
+    # Unpack the zip
+    pairs = []
+    for _, pair in zip(range(10), sorted_domains):
+        pairs.append(pair)
+    # Print tuples from the list in a nice little table
+    for tup in pairs:
+        print("{0}    {1}".format(*tup))
     print("\n")
-    # TODO Pretty-print the top 10 in place so the terminal doesn't scroll
-    # sys.stdout.write(stats_dictionary)
-    # sys.stdout.flush()
 
 
 def main(line):
