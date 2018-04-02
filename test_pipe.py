@@ -42,7 +42,3 @@ def test_sort_domains():
         item_list.append(item)
 
     assert item_list == sorted_output
-
-
-def test_display_top_ten():
-    pass
