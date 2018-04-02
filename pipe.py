@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This script takes piped input from the cerstream string, filters and processes it,
-and displays real-time statistics about the top 10 used top level domains.
+This script takes piped input from the cerstream script, filters and processes it,
+and displays real-time statistics about the top 10 used top level domains sorted in descending order
+by the number of the occurences of the domain name.
 
-Adapted from the PHP workshop assigment from: https://github.com/intraworlds/workshop-php
+Adapted from the IntraWorlds PHP workshop assigment from: https://github.com/intraworlds/workshop-php
 
 Usage: $ certstream | python3 pipe.py
 """
@@ -12,6 +13,8 @@ Usage: $ certstream | python3 pipe.py
 import sys
 import re
 
+# Used to store domian names and number of occurences.
+# Must be global so the dictionary is persistent and accessible by unit tests.
 domain_stats = {}
 
 
@@ -98,7 +101,12 @@ def sort_domains(unsorted_domains):
 
 
 def display_top_ten(sorted_domains):
-    # Unpack the zip
+    """Unpacks the zipped list of tuples and displays it as a table of top 10 used domains.
+
+    Arguments:
+        sorted_domains {list[tuple(str, int)]} -- Domains and occurences sorted in descending order.
+    """
+    # Unpack the zip, only up to ten items
     pairs = []
     for _, pair in zip(range(10), sorted_domains):
         pairs.append(pair)
@@ -109,11 +117,11 @@ def display_top_ten(sorted_domains):
 
 
 def main(line):
-    line = filter_top_domain_name(line)
-    line = clean_string(line)
-    stats = create_statistics(line)
-    domains = sort_domains(stats)
-    display_top_ten(domains)
+    line = filter_top_domain_name(line)  # Takes the string piped from stdin
+    line = clean_string(line)  # Cleans the string of any unwanted characters and escape sequences
+    stats = create_statistics(line)  # Adds domain name to dictionary, counts number of occurences
+    domains = sort_domains(stats)  # Sorts the domain names by their number of occurences
+    display_top_ten(domains)  # Displays top 10 domains in descending order
 
 
 if __name__ == '__main__':
